@@ -1,4 +1,8 @@
 <h1>{{ author.name }}</h1>
+<p>{{ author.bio }}</p>
+<h4>Recipes:</h4>
 <ul>
-    <li>{{ author.bio }}</li>
+    {% for recipe in author_recipe_list %}
+        <li>{{ recipe.title }}</li>
+    {% endfor %}
 </ul>

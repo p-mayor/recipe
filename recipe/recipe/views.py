@@ -13,4 +13,7 @@ def detail(request, recipe_id):
 
 def author(request, author_id):
     author = get_object_or_404(Author, pk=author_id)
-    return render(request, 'recipe/author.html', {'author': author})
+    author_recipe_list = Recipe.objects.filter(author=author_id)
+    return render(request, 'recipe/author.html', 
+        {'author': author, 'author_recipe_list':author_recipe_list}
+    )
