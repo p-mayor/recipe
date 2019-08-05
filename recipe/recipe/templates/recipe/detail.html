@@ -1,5 +1,11 @@
 <h1>{{ recipe.title }}</h1>
-<p>Written by <strong>{{ recipe.author }}</strong></p>
+<p>
+    Written by 
+    <strong><a href="{% url 'author' recipe.author.id %}">
+        {{ recipe.author }}
+    </a></strong>
+</p>
+
 <h3>{{ recipe.title }}</h3>
 <h5>Time required: {{ recipe.time_req }}</h5>
 <p>Instructions: {{ recipe.instructions }}</p>

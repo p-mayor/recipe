@@ -2,8 +2,7 @@
     <ul>
     {% for recipe in latest_recipe_list %}
         <li>
-            Title: <a href="{% url 'detail' recipe.id %}">{{ recipe.title }}</a>
-            Author: <a href="{% url 'author' recipe.author.id %}">{{ recipe.author }}</a>
+            <a href="{% url 'detail' recipe.id %}">{{ recipe.title }}</a>
         </li>
     {% endfor %}
     </ul>
