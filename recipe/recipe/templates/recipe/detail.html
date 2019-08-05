@@ -1,7 +1,5 @@
 <h1>{{ recipe.title }}</h1>
-<ul>
-    <li>{{ recipe.author }}</li>
-    <li>{{ recipe.title }}</li>
-    <li>{{ recipe.time_req }}</li>
-    <li>{{ recipe.instructions }}</li>
-</ul>
+<p>Written by <strong>{{ recipe.author }}</strong></p>
+<h3>{{ recipe.title }}</h3>
+<h5>Time required: {{ recipe.time_req }}</h5>
+<p>Instructions: {{ recipe.instructions }}</p>

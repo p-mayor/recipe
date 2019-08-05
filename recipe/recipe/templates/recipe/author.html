@@ -3,6 +3,6 @@
 <h4>Recipes:</h4>
 <ul>
     {% for recipe in author_recipe_list %}
-        <li>{{ recipe.title }}</li>
+        <li><a href="{% url 'detail' recipe.id %}">{{ recipe.title }}</a></li>
     {% endfor %}
 </ul>
