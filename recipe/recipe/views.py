@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 
-from .models import Recipe
+from .models import Recipe, Author
 
 def index(request):
     latest_recipe_list = Recipe.objects.order_by('title')
@@ -11,5 +11,6 @@ def detail(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
     return render(request, 'recipe/detail.html', {'recipe': recipe})
 
-def author(request, recipe_id):
-    return HttpResponse("The author page for %s." % recipe_id)
+def author(request, author_id):
+    author = get_object_or_404(Author, pk=author_id)
+    return render(request, 'recipe/author.html', {'author': author})
