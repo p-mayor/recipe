@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
 from .models import Recipe, Author
-from .forms import AuthorForm
+from .forms import AuthorForm, RecipeForm
 
 def add_author(request):
     if request.method == 'POST':
@@ -16,6 +16,17 @@ def add_author(request):
     else:
         form = AuthorForm()
     return render(request, 'recipe/add_author.html', {'form':form})
+
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form = RecipeForm()
+    return render(request, 'recipe/add_recipe.html', {'form':form})
+
 
 def index(request):
     latest_recipe_list = Recipe.objects.order_by('title')
