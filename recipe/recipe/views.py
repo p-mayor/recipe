@@ -1,6 +1,17 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
 from .models import Recipe, Author
+from .forms import AuthorForm
+
+def add_author(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/')
+    else:
+        form = AuthorForm()
+    return render(request, 'recipe/add_author.html', {'form':form})
 
 def index(request):
     latest_recipe_list = Recipe.objects.order_by('title')
