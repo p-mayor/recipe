@@ -8,6 +8,10 @@ def add_author(request):
     if request.method == 'POST':
         form = AuthorForm(request.POST)
         if form.is_valid():
+            name = form.cleaned_data['author_name']
+            bio = form.cleaned_data['author_bio']
+            a = Author(name=name,bio=bio)
+            a.save()
             return HttpResponseRedirect('/')
     else:
         form = AuthorForm()
