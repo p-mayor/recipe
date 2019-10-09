@@ -1,3 +1,5 @@
+<a href="{% url 'login' %}">login</a>
+<p><a href="{% url 'logout' %}">logout</a></p>
 {% if latest_recipe_list %}
     <ul>
     {% for recipe in latest_recipe_list %}

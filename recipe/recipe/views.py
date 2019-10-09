@@ -1,22 +1,32 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+
 from .models import Recipe, Author
 from .forms import AuthorForm, RecipeForm
 
+@login_required
 def add_author(request):
-    if request.method == 'POST':
-        form = AuthorForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['author_name']
-            bio = form.cleaned_data['author_bio']
-            a = Author(name=name,bio=bio)
-            a.save()
-            return HttpResponseRedirect('/')
+    if request.user.is_staff:
+        if request.method == 'POST':
+            form = AuthorForm(request.POST)
+            if form.is_valid():
+                name = form.cleaned_data['author_name']
+                bio = form.cleaned_data['author_bio']
+                a = Author(name=name,bio=bio)
+                a.save()
+                return HttpResponseRedirect('/')
+        else:
+            form = AuthorForm()
+        return render(request, 'recipe/add_author.html', {'form':form})
     else:
-        form = AuthorForm()
-    return render(request, 'recipe/add_author.html', {'form':form})
+        return HttpResponseRedirect('/')
 
+@login_required
 def add_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
@@ -43,3 +53,24 @@ def author(request, author_id):
     return render(request, 'recipe/author.html', 
         {'author': author, 'author_recipe_list':author_recipe_list}
     )
+
+# ref: https://simpleisbetterthancomplex.com/tutorial/2017/02/18/how-to-create-user-sign-up-view.html
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'recipe/signup.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
