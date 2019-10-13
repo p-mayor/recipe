@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
+from django.contrib import messages
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -24,6 +25,7 @@ def add_author(request):
             form = AuthorForm()
         return render(request, 'recipe/add_author.html', {'form':form})
     else:
+        messages.info(request, 'You must be staff to add an author.')
         return HttpResponseRedirect('/')
 
 @login_required

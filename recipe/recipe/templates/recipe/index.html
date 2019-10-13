@@ -1,5 +1,9 @@
-<a href="{% url 'login' %}">login</a>
+<p><a href="{% url 'signup' %}">signup</a></p>
+<p><a href="{% url 'login' %}">login</a></p>
+{% if user.is_authenticated %}
 <p><a href="{% url 'logout' %}">logout</a></p>
+{% endif %}
+<h1>Recipes:</h1>
 {% if latest_recipe_list %}
     <ul>
     {% for recipe in latest_recipe_list %}
@@ -10,4 +14,14 @@
     </ul>
 {% else %}
     <p>No recipes are available.</p>
+{% endif %}
+<h1>Create:</h1>
+<p><a href="{% url 'add_author' %}">add an author</a></p>
+<p><a href="{% url 'add_recipe' %}">add a recipe</a></p>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
 {% endif %}
