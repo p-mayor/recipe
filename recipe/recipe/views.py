@@ -18,7 +18,7 @@ def add_author(request):
             if form.is_valid():
                 name = form.cleaned_data['author_name']
                 bio = form.cleaned_data['author_bio']
-                a = Author(name=name,bio=bio)
+                a = Author(name=name,bio=bio, user=request.user)
                 a.save()
                 return HttpResponseRedirect('/')
         else:
